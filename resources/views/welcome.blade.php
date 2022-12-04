@@ -5,7 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Pharmacy</title>
-
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -17,11 +23,31 @@
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
+                background-color:#0081CF;
+            }
+            h1{
+                margin-top:2%;
+                font-family:'Poppins',sans-serif;
+                text-align:center;
+                color:#ffffff;
+            }
+
+            .myForm{
+                margin-top: 2%;
+                padding-left:30%;
+                padding-right:30%;
+                color:#EDEDED;
+            }
+
+            .myForm .btn{
+                margin: 0 auto;
+                display:block;
+
             }
         </style>
     </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-red-900 sm:items-center py-4 sm:pt-0">
+    <body >
+        <div>
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -35,9 +61,42 @@
                     @endauth
                 </div>
             @endif
+            <br>
+            
+            <h1>MEDICINE ORDERING FORM LARAVEL</h1>
+        <div class="myForm">
+        <form method="POST" action=" {{ route('saveOrders') }}">
+        {{ csrf_field() }}
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Full Name</label>
+        <input type="text" class="form-control" name="fullname" id="exampleFormControlInput1" placeholder="ex. Juan Dela Cruz">
+        </div>
 
-            <h1>PHARMACY MANAGEMENT SYSTEM LARAVEL</h1>
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" id="exampleFormControlInput1" placeholder="ex. Juan@gmail.com">
+        </div><br>
 
+        <select class="form-select" aria-label="Default select example" name="medname">
+        <option selected>Choose Medicine</option>
+        @foreach ($medInformation as $userItem => $data)
+        <option value="{{ $data -> medname }}">{{ $data -> medname }}</option>
+        @endforeach
+        </select><br>
+
+        <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Quantity</label>
+        <input type="text" name="quantity" class="form-control" id="exampleFormControlInput1" placeholder="ex. 2">
+        </div>
+
+        <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label text-center">You can voluntarily<br>include your symptoms here for us to give you the right Medicine Stay safe!</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-danger text-center">Send Order</button><br><br>
+        </div>
+        </form>
         </div>
     </body>
 </html>

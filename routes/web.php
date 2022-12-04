@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SystemController;
 use App\models\Pharmacy;
+use App\models\Orders;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +16,10 @@ use App\models\Pharmacy;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome' , ['medInformation' => Pharmacy::all()]);
 });
+
+Route::post('/saveOrder',[SystemController::class, 'saveOrders'])->name('saveOrders');
 
 Route::post('/saveItemRoute',[SystemController::class, 'saveInfo'])->name('saveInfo');
 
@@ -42,4 +45,15 @@ Route::middleware([
     Route::get('/sales', function () {
         return view('sales', ['medInformation' => Pharmacy::all()]);
     })->name('sales');
+});
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/orders', function () {
+        return view('orders', ['orders' => Orders::all()]);
+    })->name('orders');
 });
